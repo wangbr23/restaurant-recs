@@ -1,0 +1,216 @@
+:root {
+  color-scheme: light;
+  --ink: #19231e;
+  --muted: #657269;
+  --paper: #fffdf8;
+  --cream: #f1ecdf;
+  --green: #235f46;
+  --green-dark: #184632;
+  --orange: #e8783e;
+  --line: #dcd6c8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 10%, rgb(232 120 62 / 16%), transparent 30rem),
+    linear-gradient(145deg, #f8f3e8, #e8efe8);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.page-shell {
+  width: min(100% - 2rem, 46rem);
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 6rem) 0 2rem;
+}
+
+.page-header {
+  max-width: 38rem;
+  margin-bottom: 2rem;
+}
+
+.eyebrow,
+.card-label {
+  margin: 0 0 0.65rem;
+  color: var(--green);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+h1 {
+  max-width: 32rem;
+  margin: 0;
+  font-size: clamp(2.6rem, 9vw, 5rem);
+  line-height: 0.96;
+}
+
+.intro {
+  max-width: 34rem;
+  margin: 1.25rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.restaurant-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(25 35 30 / 10%);
+  border-radius: 1.5rem;
+  background: var(--paper);
+  box-shadow: 0 1.5rem 4rem rgb(41 62 49 / 14%);
+}
+
+.card-accent {
+  height: 0.55rem;
+  background: linear-gradient(90deg, var(--orange), #efad5a 55%, var(--green));
+}
+
+.card-content {
+  padding: clamp(1.5rem, 5vw, 2.6rem);
+}
+
+.restaurant-card h2 {
+  margin: 0;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.cuisines {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 1.75rem;
+  color: var(--green);
+  font-weight: 750;
+}
+
+.cuisines span:not(:last-child)::after {
+  margin-left: 0.5rem;
+  color: var(--orange);
+  content: "·";
+}
+
+.muted {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.restaurant-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+  padding: 1.25rem 0;
+  border-block: 1px solid var(--line);
+}
+
+.restaurant-details div {
+  min-width: 0;
+}
+
+dt {
+  margin-bottom: 0.25rem;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+dd {
+  margin: 0;
+  font-weight: 650;
+}
+
+.diet-badge {
+  display: inline-block;
+  margin: 0 0 1.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  color: var(--green-dark);
+  background: #dcecdf;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.button {
+  min-height: 3.25rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.8rem;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.button-secondary {
+  border-color: var(--line);
+  color: var(--ink);
+  background: transparent;
+}
+
+.button-primary {
+  color: white;
+  background: var(--green);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button-primary:hover {
+  background: var(--green-dark);
+}
+
+.button-note {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-align: center;
+}
+
+.empty-state {
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: var(--paper);
+}
+
+.empty-state h2 {
+  margin-top: 0;
+}
+
+footer {
+  margin-top: 1.4rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+@media (max-width: 34rem) {
+  .restaurant-details,
+  .card-actions {
+    grid-template-columns: 1fr;
+  }
+}

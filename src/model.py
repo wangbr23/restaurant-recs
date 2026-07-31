@@ -8,8 +8,7 @@ FEATURES = ["vegetarian_friendly", "spicy", "late_night", "distance", "rating"]
 
 class RestaurantModel():
     def __init__(self):
-        self.model = self.build_model()
-        self.train_model()
+        self.model = self.train_model()
         self.x_tensor, self.y_tensor = self.build_training_tensors()
 
     def build_training_tensors(self):

@@ -1,4 +1,8 @@
+Flask<4
 numpy<2
 pandas<2.3
+python-dotenv
+requests
 scikit-learn<1.6
 torch
+urllib3<2

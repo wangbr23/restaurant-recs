@@ -1,6 +1,4 @@
-from src.model import predict_single_row, train_model
-
-model = train_model()
+from src.model import RestaurantModel
 
 example = {
     "vegetarian_friendly": 1,
@@ -10,5 +8,14 @@ example = {
     "rating": 4.7,
 }
 
-prediction = predict_single_row(model, example)
-print(f"Prediction: {prediction:.3f}")
+model = RestaurantModel()
+prediction = model.predict_single_row(example)
+accuracy, predictions, labels = model.evaluate_model()
+
+print(f"Prediction for example: {prediction:.3f}")
+print(f"Accuracy on training examples: {accuracy:.2%}")
+
+for index, (pred, label) in enumerate(zip(predictions, labels)):
+    predicted_label = 1 if pred >= 0.5 else 0
+    true_label = int(label.item())
+    print(f"Example {index + 1}: predicted={predicted_label}, true={true_label}, score={pred.item():.3f}")

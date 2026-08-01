@@ -85,6 +85,20 @@ h1 {
   padding: clamp(1.5rem, 5vw, 2.6rem);
 }
 
+.card-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card-progress {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .restaurant-card h2 {
   margin: 0;
   font-size: clamp(2rem, 7vw, 3.2rem);
@@ -179,6 +193,12 @@ dd {
   transform: translateY(-1px);
 }
 
+.button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+  transform: none;
+}
+
 .button-primary:hover {
   background: var(--green-dark);
 }
@@ -199,6 +219,44 @@ dd {
 
 .empty-state h2 {
   margin-top: 0;
+}
+
+.completion-state {
+  padding: clamp(2rem, 6vw, 3.5rem);
+  border: 1px solid rgb(25 35 30 / 10%);
+  border-radius: 1.5rem;
+  background: var(--paper);
+  box-shadow: 0 1.5rem 4rem rgb(41 62 49 / 14%);
+  text-align: center;
+}
+
+.completion-state h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+}
+
+.completion-state p:last-child {
+  max-width: 28rem;
+  margin: 0 auto;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.completion-mark {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;
+  color: white;
+  background: var(--green);
+  font-size: 1.5rem;
+  font-weight: 800;
+  place-items: center;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 footer {

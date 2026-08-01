@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Capitol Hill Restaurant Finder</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
   </head>
   <body>
     <main class="page-shell">
@@ -14,45 +15,57 @@
         <p class="intro">A simple restaurant recommender that learns what sounds good to you.</p>
       </header>
 
-      {% if restaurant %}
-        <article class="restaurant-card">
+      {% if restaurants %}
+        {% set restaurant = restaurants[0] %}
+        <article class="restaurant-card" data-restaurant-card>
           <div class="card-accent" aria-hidden="true"></div>
           <div class="card-content">
-            <p class="card-label">Nearby restaurant</p>
-            <h2>{{ restaurant.name }}</h2>
+            <div class="card-heading">
+              <p class="card-label">Nearby restaurant</p>
+              <p class="card-progress" data-progress>Restaurant 1 of {{ restaurants | length }}</p>
+            </div>
+            <h2 data-name>{{ restaurant.name }}</h2>
 
             {% if restaurant.api_cuisine %}
-              <p class="cuisines">
+              <p class="cuisines" data-cuisines>
                 {% for cuisine in restaurant.api_cuisine %}
                   <span>{{ cuisine | replace("_", " ") | title }}</span>
                 {% endfor %}
               </p>
             {% else %}
-              <p class="cuisines muted">Cuisine details unavailable</p>
+              <p class="cuisines muted" data-cuisines>Cuisine details unavailable</p>
             {% endif %}
 
             <dl class="restaurant-details">
               <div>
                 <dt>Distance</dt>
-                <dd>{{ (restaurant.distance_meters * 3.28084) | round | int }} ft away</dd>
+                <dd data-distance>{{ (restaurant.distance_meters * 3.28084) | round | int }} ft away</dd>
               </div>
               <div>
                 <dt>Address</dt>
-                <dd>{{ restaurant.address.split(",")[0] if restaurant.address else "Address unavailable" }}</dd>
+                <dd data-address>{{ restaurant.address.split(",")[0] if restaurant.address else "Address unavailable" }}</dd>
               </div>
             </dl>
 
-            {% if restaurant.vegetarian %}
-              <p class="diet-badge">Vegetarian options confirmed</p>
-            {% endif %}
+            <p class="diet-badge" data-vegetarian {% if not restaurant.vegetarian %}hidden{% endif %}>
+              Vegetarian options confirmed
+            </p>
 
             <div class="card-actions" aria-label="Restaurant preference actions">
-              <button class="button button-secondary" type="button">Not interested</button>
-              <button class="button button-primary" type="button">Like</button>
+              <button class="button button-secondary" type="button" data-choice="dislike">Not interested</button>
+              <button class="button button-primary" type="button" data-choice="like">Like</button>
             </div>
-            <p class="button-note">Preference buttons will be connected in the next step.</p>
+            <p class="button-note" data-feedback-status aria-live="polite">
+              Your choice will be saved locally.
+            </p>
           </div>
         </article>
+        <section class="completion-state" data-completion hidden>
+          <p class="completion-mark" aria-hidden="true">✓</p>
+          <h2>That’s the whole list.</h2>
+          <p>You reviewed {{ restaurants | length }} nearby restaurants. Refresh the page to start again.</p>
+        </section>
+        <script id="restaurant-data" type="application/json">{{ restaurants | tojson }}</script>
       {% else %}
         <section class="empty-state">
           <h2>No restaurant to show</h2>

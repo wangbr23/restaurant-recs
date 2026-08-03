@@ -40,3 +40,15 @@ def build_feedback_tensors(feedback_rows, vocabulary):
         torch.tensor(features, dtype=torch.float32),
         torch.tensor(labels, dtype=torch.float32),
     )
+
+
+def build_restaurant_tensor(restaurants, vocabulary):
+    """Convert unlabeled candidate restaurants into a feature tensor."""
+    if not restaurants:
+        return torch.empty((0, len(vocabulary)), dtype=torch.float32)
+
+    features = [
+        encode_restaurant_tags(restaurant, vocabulary)
+        for restaurant in restaurants
+    ]
+    return torch.tensor(features, dtype=torch.float32)

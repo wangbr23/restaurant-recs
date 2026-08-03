@@ -88,7 +88,7 @@ class RestaurantPageTests(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
 
     @patch("web_app.find_nearby_restaurants")
-    def test_saved_preferences_change_restaurant_order(self, find_restaurants):
+    def test_neural_recommender_changes_restaurant_order(self, find_restaurants):
         find_restaurants.return_value = [
             {
                 "name": "Nearby Pizza",
@@ -115,6 +115,13 @@ class RestaurantPageTests(unittest.TestCase):
             "Previous Sushi Restaurant",
             True,
             ["japanese", "sushi"],
+        )
+        save_feedback(
+            app.config["DATABASE_PATH"],
+            "previous-pizza",
+            "Previous Pizza Restaurant",
+            False,
+            ["italian", "pizza"],
         )
 
         response = self.client.get("/")

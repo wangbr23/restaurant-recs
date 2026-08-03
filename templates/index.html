@@ -11,17 +11,14 @@
     <main class="page-shell">
       <header class="page-header">
         <p class="eyebrow">Capitol Hill · Seattle</p>
-        <h1>Find your next favorite.</h1>
-        <p class="intro">A simple restaurant recommender that learns what sounds good to you.</p>
+        <h1>Restaurant picks</h1>
       </header>
 
       {% if restaurants %}
         {% set restaurant = restaurants[0] %}
         <article class="restaurant-card" data-restaurant-card>
-          <div class="card-accent" aria-hidden="true"></div>
           <div class="card-content">
             <div class="card-heading">
-              <p class="card-label">Nearby restaurant</p>
               <p class="card-progress" data-progress>Restaurant 1 of {{ restaurants | length }}</p>
             </div>
             <h2 data-name>{{ restaurant.name }}</h2>

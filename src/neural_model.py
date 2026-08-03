@@ -38,3 +38,25 @@ class NeuralRestaurantModel:
         with torch.no_grad():
             probabilities = self.model(features)
         return probabilities.flatten().tolist()
+
+    def rank_restaurants_by_probability(self, restaurants, probabilities):
+        """Attach Like probabilities and rank candidates from highest to lowest."""
+        if len(restaurants) != len(probabilities):
+            raise ValueError(
+                "Each restaurant must have one predicted probability."
+            )
+
+        ranked_restaurants = []
+        for restaurant, probability in zip(restaurants, probabilities):
+            ranked_restaurant = dict(restaurant)
+            ranked_restaurant["predicted_probability"] = probability
+            ranked_restaurants.append(ranked_restaurant)
+
+        ranked_restaurants.sort(
+            key=lambda restaurant: (
+                -restaurant["predicted_probability"],
+                restaurant.get("distance_meters") is None,
+                restaurant.get("distance_meters") or 0,
+            )
+        )
+        return ranked_restaurants

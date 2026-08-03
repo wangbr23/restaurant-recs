@@ -4,7 +4,10 @@ from flask import Flask, jsonify, render_template, request
 
 from src.feedback import list_feedback, save_feedback
 from src.geoapify import GeoapifyError, find_nearby_restaurants
-from src.preferences import build_preference_profile, rank_restaurants_for_profile
+from src.neural_recommender import (
+    rank_restaurants_with_recommender,
+    train_recommender,
+)
 
 
 app = Flask(__name__)
@@ -27,8 +30,21 @@ def index():
 
     os.makedirs(os.path.dirname(app.config["DATABASE_PATH"]), exist_ok=True)
     feedback_rows = list_feedback(app.config["DATABASE_PATH"])
-    preference_profile = build_preference_profile(feedback_rows)
-    restaurants = rank_restaurants_for_profile(restaurants, preference_profile)
+    try:
+        recommender, vocabulary, _ = train_recommender(feedback_rows)
+        restaurants = rank_restaurants_with_recommender(
+            recommender,
+            vocabulary,
+            restaurants,
+        )
+    except ValueError:
+        restaurants = sorted(
+            restaurants,
+            key=lambda restaurant: (
+                restaurant.get("distance_meters") is None,
+                restaurant.get("distance_meters") or 0,
+            ),
+        )
 
     return render_template("index.html", restaurants=restaurants, error=None)
 
